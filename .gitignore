@@ -1,0 +1,12 @@
+# .gitignore
+
+# Python
+__pycache__/
+
+# Other entries...
+
+# config.py file
+config.py
+example.csv
+test.ipynb
+```

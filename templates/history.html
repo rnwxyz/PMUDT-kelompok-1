@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Riwayat</title>
+{% endblock %}
+{% block main %}
+<div class="max-w-7xl overflow-hidden mx-auto sm:px-6 lg:px-8">
+  <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
+    <div class="p-6 text-4xl font-bold">
+      <h1>Riwayat Analisis</h1>
+    </div>
+    <div class="flex items-center pb-10">
+      <div class="relative overflow-y-auto shadow-md m-3 h-96">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="text-xs text-center text-gray-700 uppercase bg-gray-200"
+            style="position: sticky; top: 0; z-index: 1;">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Tanggal
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Jam
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Data
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Aspek 1
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Aspek 2
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Aspek 3
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Aspek 4
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for _ in range(100) %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                senin, 20 september 2021
+              </th>
+              <td class="px-6 py-4">
+                10:00
+              </td>
+              <td class="px-6 py-4 text-center">
+                100
+              </td>
+              <td class="px-6 py-4">
+                50% negatif, 10% positif
+              </td>
+              <td class="px-6 py-4">
+                10% negatif, 20% positif
+              </td>
+              <td class="px-6 py-4">
+                10% negatif, 50% positif
+              </td>
+              <td class="px-6 py-4">
+                10% negatif, 50% positif
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

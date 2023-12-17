@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Hasil Analisis</title>
+{% endblock %}
+{% block main %}
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="flex items-end">
+            <div class="p-6 text-4xl font-bold">
+                <h1>Hasil Analisis</h1>
+            </div>
+            <a href="{{ url_for('static', filename='csv/result.csv') }}" download>
+                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-5 py-2 px-4 rounded">Export</button>
+            </a>
+        </div>
+        <!-- show plot.png -->
+        <div class="flex justify-center">
+            <img src="{{ url_for('static', filename='img/plot.png') }}" alt="plot" class="w-1/2">
+        </div>
+        <!-- {% for item in result %}
+            <h1>{{item["text"]}}</h1>
+        {% endfor %} -->
+    </div>
+</div>
+{% endblock %}
