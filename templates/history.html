@@ -8,6 +8,7 @@
     <div class="p-6 text-4xl font-bold">
       <h1>Riwayat Analisis</h1>
     </div>
+    {% if history %}
     <div class="flex items-center pb-10">
       <div class="relative overflow-y-auto shadow-md m-3 h-96">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -18,48 +19,42 @@
                 Tanggal
               </th>
               <th scope="col" class="px-6 py-3">
-                Jam
-              </th>
-              <th scope="col" class="px-6 py-3">
                 Data
               </th>
               <th scope="col" class="px-6 py-3">
-                Aspek 1
+                ILC
               </th>
               <th scope="col" class="px-6 py-3">
-                Aspek 2
+                Kick Andy
               </th>
               <th scope="col" class="px-6 py-3">
-                Aspek 3
+                Hitam Putih
               </th>
               <th scope="col" class="px-6 py-3">
-                Aspek 4
+                Mata Najwa
               </th>
             </tr>
           </thead>
           <tbody>
-            {% for _ in range(100) %}
+            {% for data in history %}
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                senin, 20 september 2021
+                {{ data.created_at }}
               </th>
-              <td class="px-6 py-4">
-                10:00
-              </td>
               <td class="px-6 py-4 text-center">
-                100
+                {{ data.data }}
               </td>
               <td class="px-6 py-4">
-                50% negatif, 10% positif
+                {{ data.aspek_0 }}
               </td>
               <td class="px-6 py-4">
-                10% negatif, 20% positif
+                {{ data.aspek_1 }}
               </td>
               <td class="px-6 py-4">
-                10% negatif, 50% positif
+                {{ data.aspek_2 }}
               </td>
               <td class="px-6 py-4">
-                10% negatif, 50% positif
+                {{ data.aspek_3 }}
               </td>
             </tr>
             {% endfor %}
@@ -67,6 +62,17 @@
         </table>
       </div>
     </div>
+    {% else %}
+    <div class="flex items-center justify-center h-96">
+      <p class="text-2xl font-semibold text-gray-500">Tidak ada data</p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="mb-4 text-red-500">
+      {{ error }}
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

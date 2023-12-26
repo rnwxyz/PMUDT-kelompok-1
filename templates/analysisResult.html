@@ -4,7 +4,7 @@
 {% endblock %}
 {% block main %}
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg pb-8">
         <div class="flex items-end">
             <div class="p-6 text-4xl font-bold">
                 <h1>Hasil Analisis</h1>
@@ -15,11 +15,18 @@
         </div>
         <!-- show plot.png -->
         <div class="flex justify-center">
-            <img src="{{ url_for('static', filename='img/plot.png') }}" alt="plot" class="w-1/2">
+            <img src="{{ url_for('static', filename='img/plot.png') }}" alt="plot" width="850">
         </div>
-        <!-- {% for item in result %}
-            <h1>{{item["text"]}}</h1>
-        {% endfor %} -->
+        <div class="flex pl-10 justify-center border-4 mx-32 rounded-2xl border-red-400 bg-red-50">
+            <!-- add warning icon -->
+            <div class="pr-2">
+                <img src="{{ url_for('static', filename='img/warning.png') }}" alt="warning" width="100">
+            </div>
+            <div class="mt-4 font-semibold">
+                <p>{{ cluster_negative }} memiliki sentimen negatif paling banyak dengan persentase {{ persentase_negative }}% dari seluruh data.</p>
+                <p>Sedangkan {{ cluster_positive }} memiliki sentimen positif terbanyak dengan persentase {{ persentase_positive }}% dari seluruh data.</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

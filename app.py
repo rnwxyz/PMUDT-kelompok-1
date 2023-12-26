@@ -67,44 +67,54 @@ def register():
 @login_required
 def analysis(): 
     if request.method == 'POST':
-        document = np.array([])
+        document = pd.DataFrame(columns=['Text Tweet'])
 
         # get text data
         text_data = request.form['document']
         if text_data:
-            text_data = np.array(text_data.splitlines())
-            document = np.concatenate((document, text_data), axis=None)
+            text_data = text_data.splitlines()
+            
+            # Create a DataFrame from the text data
+            text_df = pd.DataFrame(text_data, columns=['Text Tweet'])
+
+            # Concatenate the new data with the document DataFrame
+            document = pd.concat([document, text_df], ignore_index=True)
         
         # get file data
         file = request.files['file']
+
         if file:
             try:
                 # Read the CSV file using Pandas
                 csv_data = pd.read_csv(file)
-
-                # Process the data as needed convert to numpy array
-                file_doc = csv_data.to_numpy()
-                document = np.concatenate((document, file_doc), axis=None)
-
+                document = pd.concat([document, csv_data], ignore_index=True)
             except pd.errors.EmptyDataError:
                 return render_template('analysis.html', error='data tidak ditemukan')
             except pd.errors.ParserError:
                 return render_template('analysis.html', error='data tidak ditemukan')
-        
-        preprocessed, error = AnalysisService.preprocess(document)
+            
+        if len(document) == 0:
+            return render_template('analysis.html', error='data harus diisi')
+
+        preprocessed, error = AnalysisService.preprocess(document[['Text Tweet']])
         if error:
             return render_template('analysis.html', error=error)
         
-        result, error = AnalysisService.predict(preprocessed)
+        cluster, error = AnalysisService.clustering(preprocessed)
         if error:
             return render_template('analysis.html', error=error)
         
-        error = AnalysisService.create_plot(result)
+        result, error = AnalysisService.classification(cluster)
+        if error:
+            return render_template('analysis.html', error=error)
+        
+        error = AnalysisService.plot(result)
         if error:
             return render_template('analysis.html', error=error)
         
         # form pandas dataframe to json
-        result = result.to_json(orient='records')
+        result = result[['Text Tweet', 'Predicted Cluster', 'Predicted Sentiment']].to_json(orient='records')
+
         # redirect to result page
         session['result'] = result
         return redirect(url_for('result'))
@@ -114,15 +124,41 @@ def analysis():
 @app.route('/history')
 @login_required
 def history(): 
-    return render_template('history.html')
+    history, error = AnalysisService.get_history()
+    if error:
+        return render_template('history.html', error=error)
+    
+    return render_template('history.html', history=history)
 
 @app.route('/result', methods=['GET', 'POST'])
 @login_required
 def result(): 
     # get result data
     result = session.get('result', None)
+    if result is None:
+        return redirect(url_for('analysis'))
     
-    return render_template('analysisResult.html', result=result)
+    # convert json to pandas dataframe
+    result = pd.read_json(result, orient='records')
+
+    # get cluster data with sentiment most negative and most positive
+    cluster_negative = result[result['Predicted Sentiment'] == 0]['Predicted Cluster'].value_counts().index[0] if not result[result['Predicted Sentiment'] == 0]['Predicted Cluster'].empty else 0
+    cluster_positive = result[result['Predicted Sentiment'] == 1]['Predicted Cluster'].value_counts().index[0] if not result[result['Predicted Sentiment'] == 1]['Predicted Cluster'].empty else 0
+
+    cluster_mapping = {
+        0 : 'ILC',
+        1 : 'Kick Andy',
+        2 : 'Hitam Putih',
+        3 : 'Mata Najwa'
+    }
+    cluster_negative = cluster_mapping[cluster_negative]
+    cluster_positive = cluster_mapping[cluster_positive]
+
+    # get the persentase of sentiment most negative and most positive
+    persentase_negative = round((result[result['Predicted Sentiment'] == 0]['Predicted Cluster'].value_counts().values[0] if not result[result['Predicted Sentiment'] == 0]['Predicted Cluster'].empty else 0) / len(result) * 100, 1)
+    persentase_positive = round((result[result['Predicted Sentiment'] == 1]['Predicted Cluster'].value_counts().values[0] if not result[result['Predicted Sentiment'] == 1]['Predicted Cluster'].empty else 0) / len(result) * 100, 1)
+
+    return render_template('analysisResult.html', result=result, cluster_negative=cluster_negative, cluster_positive=cluster_positive, persentase_negative=persentase_negative, persentase_positive=persentase_positive)
 
 @app.route('/logout')
 @login_required

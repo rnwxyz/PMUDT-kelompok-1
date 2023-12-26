@@ -1,27 +1,2 @@
-text,aspek,label
-saya suka makanan ini,rasa,positive
-saya suka makanan ini,rasa,positive
-saya suka makanan ini,rasa,negative
-saya suka makanan ini,rasa,negative
-saya suka makanan ini,rasa,negative
-saya suka makanan ini,rasa,negative
-saya suka makanan ini,rasa,negative
-saya suka makanan ini,bau,positive
-saya suka makanan ini,bau,negative
-saya suka makanan ini,bau,positive
-saya suka makanan ini,bau,positive
-saya suka makanan ini,harga,negative
-saya suka makanan ini,harga,negative
-saya suka makanan ini,harga,negative
-saya suka makanan ini,harga,negative
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
-saya suka makanan ini,harga,positive
+Text Tweet,Predicted Cluster,Cluster Name,Predicted Sentiment,Sentiment Name
+saya benci ilc,0,IndonesiaLawyersClubTvOne,1,Positive
