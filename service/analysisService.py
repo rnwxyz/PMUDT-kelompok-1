@@ -10,6 +10,7 @@ from database import db
 from model.historyModel import History
 import utils.classifier as classifier
 import joblib
+import datetime
 import nltk
 
 class AnalysisService:
@@ -150,7 +151,6 @@ class AnalysisService:
             ax.text(i, p + n / 2, f'{percent_negative:.1f}%', ha='center', va='center', color='black', fontweight='bold')
             history[i] = f'{percent_positive:.1f}% Positif, {percent_negative:.1f}% Negatif'
 
-        print(history)
         # Save the plot to a file
         plt.savefig('./static/img/plot.png')
 
@@ -161,8 +161,11 @@ class AnalysisService:
         # export document to csv
         export.to_csv('./static/csv/result.csv', index=False)
 
+        # timestamp now
+        now = datetime.datetime.now()
+
         # insert history to database
-        history = History(user_id=current_user.id, data=total_data, aspek_0=history[0], aspek_1=history[1], aspek_2=history[2], aspek_3=history[3])
+        history = History(user_id=current_user.id, data=total_data, aspek_0=history[0], aspek_1=history[1], aspek_2=history[2], aspek_3=history[3], created_at=now)
         db.session.add(history)
         db.session.commit()
 
