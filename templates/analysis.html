@@ -14,7 +14,12 @@
         <textarea id="document" name="document" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Saya sangat tidak suka dengan ..."></textarea>
       </div>
       <div class="flex-initial w-72 p-10 content-end relative">
-        <input type="file" class="mt-4 mb-4" name="file" id="file" accept=".csv">
+        <input type="file" class="mt-4 mb-2" name="file" id="file" accept=".csv">
+        <div class="mb-28 text-blue-400">
+          <a href="{{ url_for('static', filename='csv/example_file.csv') }}" download>
+            <u>contoh format file</u>
+          </a>
+        </div>
         <button type="submit" id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
         {% if error %}
           <div class="mb-4 text-red-500">
