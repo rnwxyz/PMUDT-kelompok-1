@@ -180,13 +180,13 @@ class PositiveNegativeWordsCounterTransformer(BaseEstimator, TransformerMixin):
         return X_transformed
 
 #Positive Keywords
-pos_word = './utils/positive_keyword.txt'
+pos_word = './dataset/positive_keyword.txt'
 
 with open(pos_word, 'r') as file:
     pos_words = [line.strip() for line in file]
 
 #Negative Keywords
-neg_word = './utils/negatif_keyword.txt'
+neg_word = './dataset/negatif_keyword.txt'
 
 with open(neg_word, 'r') as file:
     neg_words = [line.strip() for line in file]

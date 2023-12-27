@@ -49,7 +49,8 @@ class AnalysisService:
     
     def get_history():
         try:
-            history = History.query.filter_by(user_id=current_user.id).all()
+            # get data by user id and order by created at descending
+            history = History.query.filter_by(user_id=current_user.id).order_by(History.created_at.desc()).all()
             # print data history
             return history, None
         except Exception as e:

@@ -10,7 +10,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3306/flask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + Config.DB_USER + ':' + Config.DB_PASS + '@' + Config.DB_HOST + ':' + Config.DB_PORT + '/' + Config.DB_NAME
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = Config.SECRET_KEY
 
@@ -67,7 +67,11 @@ def register():
 @login_required
 def analysis(): 
     if request.method == 'POST':
-        document = pd.DataFrame(columns=['Text Tweet'])
+        default_data = [
+            "saya tidak suka dengan hitam putih",
+            "saya suka menonton ILC sangat memberikan wawasan"
+        ]
+        document = pd.DataFrame({'Text Tweet': default_data})
 
         # get text data
         text_data = request.form['document']
@@ -93,12 +97,15 @@ def analysis():
             except pd.errors.ParserError:
                 return render_template('analysis.html', error='data tidak ditemukan')
             
-        if len(document) == 0:
+        if len(document) == 2:
             return render_template('analysis.html', error='data harus diisi')
 
         preprocessed, error = AnalysisService.preprocess(document[['Text Tweet']])
         if error:
             return render_template('analysis.html', error=error)
+        
+        # drop data row 1 and 2
+        preprocessed = preprocessed.drop([0, 1])
         
         cluster, error = AnalysisService.clustering(preprocessed)
         if error:

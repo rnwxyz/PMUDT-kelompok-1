@@ -22,9 +22,10 @@
             <div class="pr-2">
                 <img src="{{ url_for('static', filename='img/warning.png') }}" alt="warning" width="100">
             </div>
-            <div class="mt-4 font-semibold">
-                <p>{{ cluster_negative }} memiliki sentimen negatif paling banyak dengan persentase {{ persentase_negative }}% dari seluruh data.</p>
-                <p>Sedangkan {{ cluster_positive }} memiliki sentimen positif terbanyak dengan persentase {{ persentase_positive }}% dari seluruh data.</p>
+            <div class="mt-3 font-semibold">
+                <p><b>{{ cluster_negative }}</b> memiliki sentimen negatif paling banyak dengan persentase {{ persentase_negative }}% dari seluruh data.</p>
+                <p>Sedangkan <b>{{ cluster_positive }}</b> memiliki sentimen positif terbanyak dengan persentase {{ persentase_positive }}% dari seluruh data.</p>
+                <p>Untuk mmelihat hasil lebih detail silakan download hasil dengan menekan tombol <b>Export</b>.</p>
             </div>
         </div>
     </div>
