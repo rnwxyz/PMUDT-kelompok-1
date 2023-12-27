@@ -161,11 +161,8 @@ class AnalysisService:
         # export document to csv
         export.to_csv('./static/csv/result.csv', index=False)
 
-        # timestamp now
-        now = datetime.datetime.now()
-
         # insert history to database
-        history = History(user_id=current_user.id, data=total_data, aspek_0=history[0], aspek_1=history[1], aspek_2=history[2], aspek_3=history[3], created_at=now)
+        history = History(user_id=current_user.id, data=total_data, aspek_0=history[0], aspek_1=history[1], aspek_2=history[2], aspek_3=history[3])
         db.session.add(history)
         db.session.commit()
 
